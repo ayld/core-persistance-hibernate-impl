@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+        http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-3.0.4.xsd
+        http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring 
+  		http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd">
+
+	<bean id="baseDao" class="net.ayld.core.persistance.impl.BaseDao" abstract="true">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+    	<property name="sessionFactory" ref="sessionFactory"/>
+  	</bean>
+
+	<bean id="transactionAdvisor" class="org.springframework.transaction.interceptor.TransactionAttributeSourceAdvisor">
+      <property name="transactionInterceptor">
+          <bean class="org.springframework.transaction.interceptor.TransactionInterceptor">
+              <property name="transactionManager" ref="transactionManager"/>
+              <property name="transactionAttributeSource">
+                  <bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+              </property>
+          </bean>
+      </property>
+    </bean>
+    
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean" destroy-method="destroy">
+    	<property name="dataSource" ref="dataSource"/> <!-- must be defined in user application -->
+    	<property name="hibernateProperties" ref="hibernateProperties"/> <!-- must be defined in user application -->
+	    <property name="packagesToScan" ref="hibernatePackageScanList"/> <!-- must be defined in user application -->
+  	</bean>
+</beans>
