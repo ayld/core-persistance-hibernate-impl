@@ -12,16 +12,9 @@ import javax.persistence.Table;
 public class TestEntity extends BaseEntity<Integer>{
 
 	private String name;
-	private Integer id;
-	
 	
 	public void setName(String name) {
 		this.name = name;
-	}
-
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	@Column(name = "name")
@@ -34,9 +27,8 @@ public class TestEntity extends BaseEntity<Integer>{
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public Integer getId() {
-		return id;
+		return super.getId();
 	}
-
 
 	private static final long serialVersionUID = 1L;
 }

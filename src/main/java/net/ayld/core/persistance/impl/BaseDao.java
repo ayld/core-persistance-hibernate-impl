@@ -9,11 +9,9 @@ import net.ayld.core.persistance.Dao;
 
 import org.hibernate.SessionFactory;
 import org.springframework.core.GenericTypeResolver;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.ImmutableSet;
 
-@Transactional
 public abstract class BaseDao<E extends BaseEntity<I>, I extends Serializable> implements Dao<E, I>{
 
 	private SessionFactory sessionFactory;
@@ -35,6 +33,12 @@ public abstract class BaseDao<E extends BaseEntity<I>, I extends Serializable> i
 		return update(entity);
 	}
 	
+	@Override
+	@SuppressWarnings("unchecked")
+	public E merge(E entity) {
+		return (E) this.sessionFactory.getCurrentSession().merge(entity);
+	}
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public E read(I id) {
