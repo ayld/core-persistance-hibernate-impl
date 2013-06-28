@@ -24,6 +24,7 @@ public class PersistTest {
 	private SessionFactory sessionFactory;
 	
 	private Integer testEntity1id;
+	@SuppressWarnings("unused")
 	private Integer testEntity2id;
 	private final String testEntity1name = "e1";
 	private final String testEntity2name = "e2";

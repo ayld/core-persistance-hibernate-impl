@@ -19,7 +19,17 @@
               <artifactId>parent</artifactId>
               <version>0.0.1-SNAPSHOT</version>
         </parent>
-
+	<repositories>
+                <repository>
+                  <id>my.mvn.repo</id>
+                  <url>https://github.com/ayld/mvn-repo/raw/master</url>
+                  <!-- use snapshot version -->
+                  <snapshots>
+                     <enabled>true</enabled>
+                      <updatePolicy>always</updatePolicy>
+                   </snapshots>
+                </repository>
+        </repositories>
 	<dependencies>
 
 		<dependency>
